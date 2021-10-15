@@ -1,0 +1,8 @@
+vk_api
+environs~=8.0.0
+Django~=3.1.7
+asgiref~=3.3.1
+psycopg2-binary
+aioschedule
+gunicorn
+emoji

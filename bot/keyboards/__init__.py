@@ -1,9 +1,10 @@
-from .keyboards import ReplyKeyboardMarkup, KeyboardButton, ButtonColors
+from .keyboards import ReplyKeyboardMarkup, KeyboardButton, ButtonColors, EmptyKeyboard
 
 __all__ = (
     "ReplyKeyboardMarkup",
     "KeyboardButton",
-    "ButtonColors"
+    "ButtonColors",
+    "EmptyKeyboard",
 )
 
 

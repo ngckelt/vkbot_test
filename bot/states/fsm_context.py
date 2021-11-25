@@ -20,7 +20,7 @@ class FSMContext:
     async def set_state(self, state: State) -> None:
         self.storage.set_state(state)
 
-    async def get_current(self) -> None:
+    async def get_current(self) -> str:
         return self.storage.get_current_state()
 
     async def start(self) -> None:

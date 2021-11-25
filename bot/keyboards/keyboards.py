@@ -71,4 +71,10 @@ class ReplyKeyboardMarkup:
         return self.__reply_keyboard()
 
 
+class EmptyKeyboard(ReplyKeyboardMarkup):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 

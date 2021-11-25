@@ -7,7 +7,7 @@ from bot.filters import Filters
 from bot.dispatcher import Dispatcher
 from vk_api.longpoll import VkLongPoll, VkEventType
 from sys import exit
-from logs import logger
+# from logs import logger
 
 from pprint import pprint
 
@@ -44,7 +44,6 @@ class Bot:
     async def run(self, dp: Dispatcher):
         for event in self._longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                pprint(event)
                 await self.process_event(event, dp)
 
     @staticmethod
@@ -53,15 +52,18 @@ class Bot:
         exit()
 
     def start_polling(self, dp):
-        logger.info("Start polling")
+        # logger.info("Start polling")
+        print("Start polling")
         main_loop = asyncio.new_event_loop()
         try:
             main_loop.run_until_complete(self.run(dp))
         except KeyboardInterrupt:
-            logger.info("Stop polling")
+            print("Stop polling")
+            # logger.info("Stop polling")
             self.stop_polling(main_loop)
         except Exception as e:
-            logger.critical(f"CRITICAL {e}")
+             # logger.critical(f"CRITICAL {e}")
+            print(e)
         self.start_polling(dp)
 
     async def send_message(self, chat_id, text, keyboard=None):
@@ -76,5 +78,15 @@ class Bot:
             }
         )
 
-
+    async def send_photo(self, chat_id, photo_id):
+        random_id = vk_api.utils.get_random_id()
+        self._vk_session.method(
+            "messages.send",
+            {
+                "attachment": photo_id,
+                "message": "test",
+                "user_id": chat_id,
+                "random_id": 0
+            }
+        )
 

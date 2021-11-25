@@ -108,3 +108,7 @@
 "2021-11-26 01:39:17,416 - [DEBUG] -  urllib3.connectionpool - (connectionpool.py)._make_request(433) - https://im.vk.com:443 "GET /nim200105575?act=a_check&key=6fdd198e46827038aa7eba383019ea2059ced2ba&ts=1868397116&wait=25&mode=234&version=3 HTTP/1.1" 200 246"
 "2021-11-26 01:39:17,646 - [DEBUG] -  urllib3.connectionpool - (connectionpool.py)._make_request(433) - https://im.vk.com:443 "GET /nim200105575?act=a_check&key=6fdd198e46827038aa7eba383019ea2059ced2ba&ts=1868397121&wait=25&mode=234&version=3 HTTP/1.1" 200 67"
 "2021-11-26 01:39:23,305 - [INFO] -  logs.logger - (bot.py).start_polling(61) - Stop polling"
+"2021-11-26 01:41:42,494 - [DEBUG] -  urllib3.connectionpool - (connectionpool.py)._new_conn(939) - Starting new HTTPS connection (1): api.vk.com:443"
+"2021-11-26 01:41:42,726 - [DEBUG] -  urllib3.connectionpool - (connectionpool.py)._make_request(433) - https://api.vk.com:443 "POST /method/messages.getLongPollServer HTTP/1.1" 200 130"
+"2021-11-26 01:41:42,849 - [DEBUG] -  asyncio - (selector_events.py).__init__(59) - Using selector: EpollSelector"
+"2021-11-26 01:41:42,850 - [DEBUG] -  urllib3.connectionpool - (connectionpool.py)._new_conn(939) - Starting new HTTPS connection (1): im.vk.com:443"

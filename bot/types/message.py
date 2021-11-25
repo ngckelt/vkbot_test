@@ -1,5 +1,3 @@
-
-
 class Message:
 
     def __init__(self, bot, user_id, text, timestamp):
@@ -11,4 +9,6 @@ class Message:
     async def answer(self, text, keyboard=None) -> None:
         await self.bot.send_message(self.user_id, text, keyboard)
 
+    async def answer_photo(self, photo_url):
+        await self.bot.send_photo(self.user_id, photo_url)
 

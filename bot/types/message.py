@@ -1,3 +1,5 @@
+
+
 class Message:
 
     def __init__(self, bot, user_id, text, timestamp):

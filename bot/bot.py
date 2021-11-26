@@ -90,3 +90,13 @@ class Bot:
             }
         )
 
+    async def get_user(self, user_vk_id):
+        user = self._vk_session.method(
+            "users.get",
+            {
+                "user_id": user_vk_id
+            }
+        )
+        return user[0]
+
+

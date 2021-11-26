@@ -14,3 +14,8 @@ class Message:
     async def answer_photo(self, photo_url):
         await self.bot.send_photo(self.user_id, photo_url)
 
+    async def get_user(self):
+        return await self.bot.get_user(self.user_id)
+
+
+

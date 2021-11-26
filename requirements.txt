@@ -6,3 +6,4 @@ psycopg2-binary
 aioschedule
 gunicorn
 emoji
+beautifulsoup4

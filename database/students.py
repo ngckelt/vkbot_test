@@ -7,13 +7,12 @@ class StudentsModel:
     @staticmethod
     @sync_to_async
     def add_student(vk_id, **data):
-        student = Students.objects.create(vk_id=vk_id, **data)
-        return student
+        return Students.objects.create(vk_id=vk_id, **data)
 
     @staticmethod
     @sync_to_async
-    def get_student_by_vk_id(student_vk_id):
-        return Students.objects.filter(vk_id=student_vk_id).first()
+    def get_student_by_vk_id(vk_id):
+        return Students.objects.filter(vk_id=vk_id).first()
 
 
 

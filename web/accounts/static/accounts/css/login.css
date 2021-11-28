@@ -1,0 +1,33 @@
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f8f8;
+}
+
+.auth-form-wrapper {
+    max-width: 400px;
+    background: #fcfcfc;
+    padding: 30px;
+    border-radius: 7px;
+    border: 1px solid #ededed;
+    margin-bottom: 200px;
+}
+
+.form-row {
+    margin-top: 10px;
+}
+
+.submit-row input {
+    width: 100%;
+}
+
+@media screen and (max-width: 500px) {
+    body {
+
+    }
+}
+

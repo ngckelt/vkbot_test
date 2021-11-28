@@ -10,7 +10,7 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LogoutView):
-    next_page = "accounts/login/"
+    next_page = "/accounts/login/"
 
 
 

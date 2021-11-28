@@ -5,7 +5,7 @@ class Homeworks(models.Model):
     subject = models.CharField("Предмет", max_length=255)
     text = models.TextField("Текст")
     group = models.CharField("Группа", max_length=10)
-    date = models.DateField("Дата", null=True, blank=True)
+    date = models.DateField("Дата")
 
     def __str__(self):
         return f"{self.subject}|{self.date}"

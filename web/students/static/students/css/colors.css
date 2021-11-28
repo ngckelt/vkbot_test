@@ -1,0 +1,27 @@
+.header-bg {
+    background: #417690;;
+}
+
+.bg-blue-dark {
+    background: #417690;
+}
+
+.bg-blue {
+    background: #79aec8;
+}
+
+.bg-red {
+    background: #ba2121;
+}
+
+.bg-blue-dark:hover {
+    background: #205067;;
+}
+
+.bg-blue:hover {
+    background: #609ab6;;
+}
+
+.bg-red:hover {
+    background: #a41515;
+}

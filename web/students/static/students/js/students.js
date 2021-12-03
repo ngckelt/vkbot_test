@@ -4,6 +4,7 @@ $(document).ready(function () {
     setupShowHomeworkBlock();
     setupChangeFormCloseButton();
     setupUpdateHomeworkButton();
+    setupUpdateDeadlineButton();
 });
 
 function translateDay(text) {
@@ -45,6 +46,11 @@ function setupChangeFormCloseButton() {
         $("#homeworkChangeBlock").css('display', 'none');
         $("#backgroundDisableBlock").css('display', 'none');
     });
+
+    $("#closeDeadlineChangeBlockCross").on('click', function () {
+        $("#deadlineChangeBlock").css('display', 'none');
+        $("#backgroundDisableBlock").css('display', 'none');
+    });
 }
 
 function fillHomeworkChangeForm(subject, text, date, homework_id) {
@@ -53,6 +59,12 @@ function fillHomeworkChangeForm(subject, text, date, homework_id) {
     $("#updateHomeworkText").val(text);
     $("#updateHomeworkDate").val(date);
     $("#homeworkId").val(homework_id);
+}
+
+function fillDeadlineChangeForm(text, date, deadlineId) {
+    $("#updateDeadlineText").val(text);
+    $("#updateDeadlineDate").val(date);
+    $("#deadlineId").val(deadlineId);
 }
 
 function setupUpdateHomeworkButton() {
@@ -68,4 +80,16 @@ function setupUpdateHomeworkButton() {
     });
 }
 
+function setupUpdateDeadlineButton() {
+    $(".update-deadline").on('click', function () {
+        $("#deadlineChangeBlock").css('display', 'block');
+        $("#backgroundDisableBlock").css('display', 'block');
+        deadlineData = $($(this).parent()).siblings();
+        console.log(deadlineData);
+        text = $($(deadlineData[0]).children()[0]).val();
+        date = $(deadlineData[1]).val();
+        deadlineId = $(this).attr('data-deadline-id');
+        fillDeadlineChangeForm(text, date, deadlineId);
+    }); 
+}
 

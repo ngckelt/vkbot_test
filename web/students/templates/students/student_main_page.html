@@ -42,6 +42,25 @@
 </div>
 <!-- /Изменить домашку -->
 
+<!-- Изменить дедлайн -->
+<div id="deadlineChangeBlock" class="col-md-4">
+    <i class="fas fa-times" id="closeDeadlineChangeBlockCross"></i>
+    <form action="{% url 'update_deadline' %}" method="POST">
+
+        <label>Текст</label>
+        <textarea id="updateDeadlineText" name="text" class="form-control" required></textarea>
+
+        <label>Дата</label>
+        <input id="updateDeadlineDate" type="date" name="date" class="form-control" required>
+
+        <div class="d-grid">
+            <button type="submit" class="btn bg-blue-dark text-white mt-2">Сохранить</button>
+        </div>
+        {% csrf_token %}
+        <input type="hidden" name="deadline_id" id="deadlineId">
+    </form>
+</div>
+<!-- /Изменить дедлайн -->
 
 <!-- Основной контейнер -->
 <div class="container-fluid row">
@@ -139,6 +158,39 @@
                     </form>
                 </div>
                 <!--  /Добавить дедлайн  -->
+
+                <!-- Текущие дедлайны -->
+                <div class="deadlines">
+                    {% for deadline_object in deadline_objects %}
+                    <div class="deadline-wrapper col-12 col-md-4">
+                        <div class="deadline-date show-homework-arrow">
+                            <span class="deadline-date-wrapper">{{ deadline_object.str_date }}</span>
+                            <i class="fas fa-chevron-circle-down"></i>
+                        </div>
+                        <div class="deadline-item-wrapper hidden col-12" data-opened="false">
+                        {% for deadline in deadline_object.deadlines %}
+                            <div class="deadline-data-wrapper col-12">
+                                <div class="deadline-text col-6">
+                                    {{ deadline.text|slice:":30" }}
+                                     <textarea hidden>{{ deadline.text }}</textarea>
+                                </div>
+                                <input type="text" hidden value="{{ deadline_object.str_date_input_format }}">
+                                <div class="deadline-data-options col-md-9">
+                                    <a class="btn bg-blue text-white update-deadline"
+                                       data-deadline-id="{{ deadline.pk }}">Редактировать</a>
+                                    <form action="{% url 'delete_deadline' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="text" hidden name="deadline_id" value="{{ deadline.pk }}">
+                                        <button class="btn bg-red text-white">Удалить</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- /Текущие дедлайны -->
 
             </div>
             <!-- /Дедлайны -->

@@ -19,6 +19,7 @@
 
 {% block content %}
 
+<!-- Изменить домашку -->
 <div id="homeworkChangeBlock" class="col-md-4">
     <i class="fas fa-times" id="closeHomeworkChangeBlockCross"></i>
     <form action="{% url 'update_homework' %}" method="POST">
@@ -39,68 +40,117 @@
         <input type="hidden" name="homework_id" id="homeworkId">
     </form>
 </div>
+<!-- /Изменить домашку -->
+
+
+<!-- Основной контейнер -->
+<div class="container-fluid row">
+    <div class="bd-example mt-2">
+
+        <!-- Вкладки -->
+        <nav>
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Домашки</button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Дедлайны</button>
+            </div>
+        </nav>
+        <!-- /Вкладки -->
+
+        <!-- Контент -->
+        <div class="tab-content" id="nav-tabContent mb-3">
+
+            <!-- Домашки -->
+            <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <!--  Добавить домашку  -->
+                <div class="col-12 col-md-4">
+                <h3>Добавить домашку</h3>
+                <form action="{% url 'add_homework' %}" method="POST">
+
+                <label>Предмет</label>
+                <select name="subject" class="form-select" required>
+                    <option value="Английский">Английский</option>
+                </select>
+
+                <label>Текст</label>
+                <textarea name="text" class="form-control" required></textarea>
+
+                <label>Дата</label>
+                <input type="date" name="date" class="form-control" required>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn bg-blue-dark text-white mt-2">Добавить</button>
+                </div>
+
+                {% csrf_token %}
+                </form>
+                </div>
+                <!--  /Добавить домашку  -->
+
+                <!-- Текущие домашки -->
+                <div class="homeworks">
+                {% for homework_object in homework_objects %}
+                <div class="homework-wrapper col-12 col-md-4">
+                    <div class="homework-date show-homework-arrow">
+                        <span class="homework-date-wrapper">{{ homework_object.str_date }}</span>
+                        <i class="fas fa-chevron-circle-down"></i>
+                    </div>
+                    <div class="homework-item-wrapper hidden col-12" data-opened="false">
+                    {% for homework in homework_object.homeworks %}
+                        <div class="homework-data-wrapper col-12">
+                            <div class="homework-data-subject col-md-3">{{ homework.subject }}</div>
+                            <textarea hidden>{{ homework.text }}</textarea>
+                            <input type="text" hidden value="{{ homework_object.str_date_input_format }}">
+                            <div class="homework-data-options col-md-9">
+                                <a class="btn bg-blue text-white update-homework"
+                                   data-homework-id="{{ homework.pk }}">Редактировать</a>
+                                <form action="{% url 'delete_homework' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" hidden name="homework_id" value="{{ homework.pk }}">
+                                    <button class="btn bg-red text-white">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+                <!-- /Текущие домашки -->
+            </div>
+            <!-- /Домашки -->
+
+            <!-- Дедлайны -->
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <!--  Добавить дедлайн  -->
+                <div class="col-12 col-md-4">
+                    <h3>Добавить дедлайн</h3>
+                    <form action="{% url 'add_deadline' %}" method="POST">
+
+                        <label>Текст</label>
+                        <textarea name="text" class="form-control" required></textarea>
+
+                        <label>Дата</label>
+                        <input type="date" name="date" class="form-control" required>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn bg-blue-dark text-white mt-2">Добавить</button>
+                        </div>
+                    {% csrf_token %}
+                    </form>
+                </div>
+                <!--  /Добавить дедлайн  -->
+
+            </div>
+            <!-- /Дедлайны -->
+
+        </div>
+        <!-- /Контент -->
+    </div>
+</div>
+<!-- /Основной контейнер -->
 
 <div id="backgroundDisableBlock"></div>
 
-<div class="container-fluid">
-
-    <!--  Добавить домашку  -->
-    <div class="col-12 col-md-4">
-        <h3>Добавить домашку</h3>
-        <form action="{% url 'add_homework' %}" method="POST">
-
-            <label>Предмет</label>
-            <select name="subject" class="form-select" required>
-                <option value="Английский">Английский</option>
-            </select>
-
-            <label>Текст</label>
-            <textarea name="text" class="form-control" required></textarea>
-
-            <label>Дата</label>
-            <input type="date" name="date" class="form-control" required>
-
-            <div class="d-grid">
-                <button type="submit" class="btn bg-blue-dark text-white mt-2">Добавить</button>
-            </div>
-
-            {% csrf_token %}
-        </form>
-    </div>
-     <!--  /Добавить домашку  -->
-
-    <!-- Текущие домашки -->
-    <div class="homeworks">
-        {% for homework_object in homework_objects %}
-            <div class="homework-wrapper col-12 col-md-4">
-                <div class="homework-date show-homework-arrow">
-                    <span class="homework-date-wrapper">{{ homework_object.str_date }}</span>
-                    <i class="fas fa-chevron-circle-down"></i>
-                </div>
-                <div class="homework-item-wrapper hidden col-12" data-opened="false">
-                {% for homework in homework_object.homeworks %}
-                    <div class="homework-data-wrapper col-12">
-                        <div class="homework-data-subject col-md-3">{{ homework.subject }}</div>
-                        <textarea hidden>{{ homework.text }}</textarea>
-                        <input type="text" hidden value="{{ homework_object.str_date_input_format }}">
-                        <div class="homework-data-options col-md-9">
-                            <a class="btn bg-blue text-white update-homework"
-                               data-homework-id="{{ homework.pk }}">Редактировать</a>
-                            <form action="{% url 'delete_homework' %}" method="POST">
-                                {% csrf_token %}
-                                <input type="text" hidden name="homework_id" value="{{ homework.pk }}">
-                                <button class="btn bg-red text-white">Удалить</button>
-                            </form>
-                        </div>
-                    </div>
-                {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-    <!-- /Текущие домашки -->
-
-</div>
 
 {% endblock content %}
 

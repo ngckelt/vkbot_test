@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     'web.accounts',
     'web.students',
-    'web.homeworks'
+    'web.homeworks',
+    'web.deadlines',
 ]
 
 MIDDLEWARE = [

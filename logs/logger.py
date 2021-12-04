@@ -22,7 +22,7 @@ console_out = logging.StreamHandler()
 logging.basicConfig(
     handlers=(file_log, console_out),
     format=u'"%(asctime)s - [%(levelname)s] -  %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"',
-    level=logging.DEBUG,
+    level=logging.INFO,
 )
 
 

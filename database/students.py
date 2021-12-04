@@ -24,5 +24,8 @@ class StudentsModel:
                                         first_name=student.first_name, last_name=student.last_name)
         UserProfile.objects.create(user=user, student=student)
 
-
+    @staticmethod
+    @sync_to_async
+    def get_students_by_filters(**filters):
+        return Students.objects.filter(**filters)
 

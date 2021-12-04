@@ -6,10 +6,8 @@ from bot.types import Message
 from bot.filters import Filters
 from bot.dispatcher import Dispatcher
 from vk_api.longpoll import VkLongPoll, VkEventType
+from logs import logger
 from sys import exit
-# from logs import logger
-
-from pprint import pprint
 
 
 class Bot:
@@ -31,8 +29,7 @@ class Bot:
                 if method_args.get('state'):
                     state = FSMContext(message.user_id)
                     args.append(state)
-                await handler.method(*args)
-                break
+                return await handler.method(*args)
 
     async def process_event(self, event, dp: Dispatcher):
         message = Message(self, user_id=event.user_id, text=event.text, timestamp=event.timestamp)
@@ -44,7 +41,9 @@ class Bot:
     async def run(self, dp: Dispatcher):
         for event in self._longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+                logger.info(event.text)
                 await self.process_event(event, dp)
+        await asyncio.sleep(1)
 
     @staticmethod
     def stop_polling(loop):
@@ -52,18 +51,16 @@ class Bot:
         exit()
 
     def start_polling(self, dp):
-        # logger.info("Start polling")
-        print("Start polling")
-        main_loop = asyncio.new_event_loop()
+        logger.info("Start polling")
+        main_loop = asyncio.get_event_loop()
+        main_loop.create_task(self.run(dp))
         try:
-            main_loop.run_until_complete(self.run(dp))
+            main_loop.run_forever()
         except KeyboardInterrupt:
-            print("Stop polling")
-            # logger.info("Stop polling")
+            logger.info("Stop polling")
             self.stop_polling(main_loop)
         except Exception as e:
-             # logger.critical(f"CRITICAL {e}")
-            print(e)
+            logger.critical(f"CRITICAL {e}")
         self.start_polling(dp)
 
     async def send_message(self, chat_id, text, keyboard=None):

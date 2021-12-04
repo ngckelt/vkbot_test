@@ -1,3 +1,4 @@
+import asyncio
 from os import environ
 from django import setup
 
@@ -18,5 +19,8 @@ def setup_django():
     setup()
 
 
+def setup_bot():
+    from handlers import dp
+    bot.start_polling(dp)
 
 

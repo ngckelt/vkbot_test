@@ -1,9 +1,11 @@
-from loader import bot, setup_django
+import asyncio
+
+from loader import setup_django, setup_bot
 
 if __name__ == '__main__':
     setup_django()
-    from handlers import dp
-    bot.start_polling(dp)
+    setup_bot()
+
 
 
 

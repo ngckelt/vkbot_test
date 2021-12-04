@@ -14,4 +14,9 @@ class DeadlinesModel:
     def add_deadline(text, group, date):
         Deadlines.objects.create(text=text, group=group, date=date)
 
+    @staticmethod
+    @sync_to_async
+    def get_deadlines():
+        return Deadlines.objects.all()
+
 

@@ -1,3 +1,3 @@
-from .homeworks import dp
+from .get_homeworks import dp
 
 __all__ = ["dp"]

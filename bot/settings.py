@@ -9,3 +9,5 @@ STORAGE_DIR = "bot/storage/storage"
 
 LOG_FILE = f"logs/logs.log"
 
+WEEK_DAYS = ("пн", "вт", "ср", "чт", "пт", "сб")
+

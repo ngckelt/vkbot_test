@@ -10,8 +10,8 @@ def homework_options_keyboard():
         "buttons": [
             [KeyboardButton("Сегодня"), KeyboardButton("Завтра")],
             [KeyboardButton("Эта неделя"), KeyboardButton("Следующая неделя")],
-            [KeyboardButton("ПН"), KeyboardButton("ВТ"), KeyboardButton("СР")],
-            [KeyboardButton("ЧТ"), KeyboardButton("ПТ"), KeyboardButton("СБ")],
+            [KeyboardButton("пн"), KeyboardButton("вт"), KeyboardButton("ср")],
+            [KeyboardButton("чт"), KeyboardButton("пт"), KeyboardButton("сб")],
             [KeyboardButton("Все")],
         ]
     })
@@ -25,7 +25,8 @@ def main_keyboard():
         "one_time": False,
         "buttons": [
             [KeyboardButton("Домашка"), KeyboardButton("Дедлайны")],
-            [KeyboardButton("Сайт"), KeyboardButton("Расписание")],
+            [KeyboardButton("Добавить домашку"), KeyboardButton("Добавить дедлайн")],
+            [KeyboardButton("Сайт")],
         ]
     })
     return markup

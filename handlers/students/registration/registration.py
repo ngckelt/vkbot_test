@@ -15,7 +15,7 @@ async def start_registration(message: Message, state: FSMContext):
         await state.set_state(RegisterUser.get_group)
         await message.answer("Привет! Укажи свою группу")
     else:
-        await message.answer("Ты уже есть в базе")
+        await message.answer("Ты уже есть в базе", keyboard=main_keyboard())
 
 
 @dp.message_handler(state=RegisterUser.get_group)

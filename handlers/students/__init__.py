@@ -1,4 +1,3 @@
-from .test import dp
 from .homeworks import dp
 from .registration import dp
 from .deadlines import dp

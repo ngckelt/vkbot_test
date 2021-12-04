@@ -1,4 +1,4 @@
-from web.students.models import *
+from web.students.models import Students
 from asgiref.sync import sync_to_async
 
 

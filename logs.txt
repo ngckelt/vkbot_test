@@ -1,0 +1,6 @@
+"2021-11-26 01:19:55,178 - [DEBUG] -  urllib3.connectionpool - (connectionpool.py)._new_conn(939) - Starting new HTTPS connection (1): api.vk.com:443"
+"2021-11-26 01:19:55,418 - [DEBUG] -  urllib3.connectionpool - (connectionpool.py)._make_request(433) - https://api.vk.com:443 "POST /method/messages.getLongPollServer HTTP/1.1" 200 128"
+"2021-11-26 01:19:55,537 - [INFO] -  logs.logger - (bot.py).start_polling(59) - Start polling"
+"2021-11-26 01:19:55,537 - [WARNING] -  logs.logger - (bot.py).start_polling(60) - Start polling"
+"2021-11-26 01:19:55,537 - [ERROR] -  logs.logger - (bot.py).start_polling(61) - error"
+"2021-11-26 01:19:55,537 - [CRITICAL] -  logs.logger - (bot.py).start_polling(62) - critical"

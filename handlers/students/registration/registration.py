@@ -5,6 +5,25 @@ from states.students.registration import RegisterUser
 from utils.groups import get_data_by_group
 from keyboards.keyboards import main_keyboard
 from database import StudentsModel
+from transliterate import translit
+import secrets
+import string
+
+
+def create_password():
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for _ in range(10))
+
+
+def create_username(student):
+    return translit(f"{student.first_name}_{student.last_name}", language_code='ru', reversed=True)
+
+
+async def create_site_account(student):
+    site_username = create_username(student)
+    password = create_password()
+    await StudentsModel.create_site_account(student, site_username, password)
+    return site_username, password
 
 
 @dp.message_handler(text="Начать")
@@ -15,7 +34,7 @@ async def start_registration(message: Message, state: FSMContext):
         await state.set_state(RegisterUser.get_group)
         await message.answer("Привет! Укажи свою группу")
     else:
-        await message.answer("Ты уже есть в базе", keyboard=main_keyboard())
+        await message.answer("Ты уже зарегистрировался", keyboard=main_keyboard())
 
 
 @dp.message_handler(state=RegisterUser.get_group)
@@ -39,11 +58,19 @@ async def get_student_group(message: Message, state: FSMContext):
                     f"Факультет: {student.faculty}\n" \
                     f"Курс: {student.course}\n" \
                     f"Группа: {student.group}"
-        await message.answer(f"Бот знает о тебе следующие данные: \n{user_data}", keyboard=main_keyboard())
-        await state.finish()
-    except:
-        await message.answer("Такой группы не существует")
 
+        await message.answer(f"Бот знает о тебе следующую информацию: \n{user_data}", keyboard=main_keyboard())
+        username, password = await create_site_account(student)
+        await message.answer("Данные для входа на сайт:\n"
+                             f"Логин: {username}\nПароль: {password}", keyboard=main_keyboard())
+        await state.finish()
+    except TypeError as e:
+        print(e, e.__class__)
+        await message.answer("Такой группы не существует. Попробуй еще раз")
+    except Exception as e:
+        print(e, e.__class__)
+        await message.answer("При создании учетной записи на сайте произошла ошибка")
+        await state.finish()
 
 
 

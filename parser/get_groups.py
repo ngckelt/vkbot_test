@@ -1,8 +1,15 @@
-import re
+import json
+import requests
 from bs4 import BeautifulSoup
 
 
 def get_groups():
+    with open('parser/groups_data.json', 'r') as f:
+        data = json.loads(f.read())
+    return data
+
+
+def parse_groups():
     """
     :return:
     {
@@ -17,8 +24,7 @@ def get_groups():
     }
     """
     groups = dict()
-    with open("parser/groups.html", "r") as f:
-        content = f.read()
+    content = requests.get('https://www.nstu.ru/studies/schedule/schedule_classes').text
 
     soup = BeautifulSoup(content, 'lxml')
 
@@ -37,4 +43,11 @@ def get_groups():
             course_groups = course.find_all('a', class_='schedule__faculty-groups__item')
             for group in course_groups:
                 groups[faculty_name][course_number].append(group.text)
+
+    with open('groups_data.json', 'w') as f:
+        f.write(json.dumps(groups))
     return groups
+
+
+if __name__ == '__main__':
+    parse_groups()

@@ -14,3 +14,5 @@ class UserProfile(models.Model):
         verbose_name = 'Профиль'
         verbose_name_plural = 'Профили'
 
+
+

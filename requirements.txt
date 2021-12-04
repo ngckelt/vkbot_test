@@ -7,3 +7,4 @@ aioschedule
 gunicorn
 emoji
 beautifulsoup4
+requests

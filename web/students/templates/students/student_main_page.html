@@ -25,6 +25,9 @@
     <form action="{% url 'update_homework' %}" method="POST">
         <label>Предмет</label>
         <select id="updateHomeworkSubject" name="subject" class="form-select" required>
+            {% for subject in subjects %}
+                <option value="{{ subject }}">{{ subject }}</option>
+            {% endfor %}
         </select>
 
         <label>Текст</label>
@@ -87,7 +90,9 @@
 
                 <label>Предмет</label>
                 <select name="subject" class="form-select" required>
-                    <option value="Английский">Английский</option>
+                    {% for subject in subjects %}
+                        <option value="{{ subject }}">{{ subject }}</option>
+                    {% endfor %}
                 </select>
 
                 <label>Текст</label>

@@ -7,7 +7,7 @@ from database import HomeworksModel, StudentsModel
 from .utils import correct_week_day, get_closest_week_day_date, get_future_date, get_today_date
 
 
-async def collect_homeworks(student_vk_id, date=None):
+async def get_homeworks(student_vk_id, date=None):
     student = await StudentsModel.get_student_by_vk_id(student_vk_id)
     if date:
         homeworks = await HomeworksModel.get_homeworks_by_filters(group=student.group, date=date)
@@ -34,7 +34,7 @@ async def get_homework_by_week_day(message: Message, state: FSMContext):
     week_day = message.text
     if correct_week_day(week_day):
         date = get_closest_week_day_date(week_day)
-        homeworks = await collect_homeworks(message.user_id, date.date())
+        homeworks = await get_homeworks(message.user_id, date.date())
         await message.answer(homeworks, keyboard=main_keyboard())
         await state.finish()
     else:
@@ -44,7 +44,7 @@ async def get_homework_by_week_day(message: Message, state: FSMContext):
 @dp.message_handler(state=Homework.get_option, text="Сегодня")
 async def send_today_homework(message: Message, state: FSMContext):
     date = get_today_date()
-    homeworks = await collect_homeworks(message.user_id, date.date())
+    homeworks = await get_homeworks(message.user_id, date.date())
     await message.answer(homeworks, keyboard=main_keyboard())
     await state.finish()
 
@@ -52,26 +52,26 @@ async def send_today_homework(message: Message, state: FSMContext):
 @dp.message_handler(state=Homework.get_option, text="Завтра")
 async def send_next_day_homework(message: Message, state: FSMContext):
     date = get_future_date(1)
-    homeworks = await collect_homeworks(message.user_id, date.date())
+    homeworks = await get_homeworks(message.user_id, date.date())
     await message.answer(homeworks, keyboard=main_keyboard())
     await state.finish()
 
 
-@dp.message_handler(state=Homework.get_option, text="Эта неделя")
-async def send_this_week_homework(message: Message, state: FSMContext):
-    await message.answer("Эта неделя", keyboard=main_keyboard())
-    await state.finish()
+# @dp.message_handler(state=Homework.get_option, text="Эта неделя")
+# async def send_this_week_homework(message: Message, state: FSMContext):
+#     await message.answer("Эта неделя", keyboard=main_keyboard())
+#     await state.finish()
+#
+#
+# @dp.message_handler(state=Homework.get_option, text="Следующая неделя")
+# async def send_next_week_homework(message: Message, state: FSMContext):
+#     await message.answer("Следующая неделя", keyboard=main_keyboard())
+#     await state.finish()
 
 
-@dp.message_handler(state=Homework.get_option, text="Следующая неделя")
-async def send_next_week_homework(message: Message, state: FSMContext):
-    await message.answer("Следующая неделя", keyboard=main_keyboard())
-    await state.finish()
-
-
-@dp.message_handler(state=Homework.get_option, text="Все")
+@dp.message_handler(state=Homework.get_option, text="Все что есть")
 async def send_all_homework(message: Message, state: FSMContext):
-    homeworks = await collect_homeworks(message.user_id)
+    homeworks = await get_homeworks(message.user_id)
     await message.answer(homeworks, keyboard=main_keyboard())
     await state.finish()
 

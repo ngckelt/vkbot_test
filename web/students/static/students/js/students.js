@@ -40,7 +40,6 @@ function toggleHomeworkDataDisplay(element) {
     }
 }
 
-
 function setupChangeFormCloseButton() {
     $("#closeHomeworkChangeBlockCross").on('click', function () {
         $("#homeworkChangeBlock").css('display', 'none');
@@ -54,8 +53,8 @@ function setupChangeFormCloseButton() {
 }
 
 function fillHomeworkChangeForm(subject, text, date, homework_id) {
-    select = $("#updateHomeworkSubject");
-    $(select).prepend("<option value=\""+subject+"\">"+ subject +"</option>");
+    // select = $("#updateHomeworkSubject");
+    // $(select).prepend("<option value=\""+subject+"\">"+ subject +"</option>");
     $("#updateHomeworkText").val(text);
     $("#updateHomeworkDate").val(date);
     $("#homeworkId").val(homework_id);

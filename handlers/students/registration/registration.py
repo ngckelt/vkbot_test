@@ -3,7 +3,7 @@ from bot.types import Message
 from bot.states import FSMContext
 from states.students.registration import RegisterUser
 from utils.groups import get_data_by_group
-from keyboards.keyboards import main_keyboard
+from keyboards.keyboards import main_keyboard, empty_keyboard
 from database import StudentsModel
 from transliterate import translit
 import secrets
@@ -32,7 +32,7 @@ async def start_registration(message: Message, state: FSMContext):
     if student is None:
         await state.start()
         await state.set_state(RegisterUser.get_group)
-        await message.answer("Привет! Укажи свою группу")
+        await message.answer("Привет! Укажи свою группу", keyboard=empty_keyboard())
     else:
         await message.answer("Ты уже зарегистрировался", keyboard=main_keyboard())
 

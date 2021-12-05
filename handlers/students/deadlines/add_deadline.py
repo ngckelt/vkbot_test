@@ -20,7 +20,7 @@ async def get_deadline_text(message: Message, state: FSMContext):
     text = message.text
     await state.update_data(text=text)
     await state.set_state(AddDeadline.get_date)
-    await message.answer("Введи дату")
+    await message.answer("Введи дату в формате дд.мм.гггг")
 
 
 @dp.message_handler(state=AddDeadline.get_date)

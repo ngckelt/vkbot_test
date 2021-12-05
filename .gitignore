@@ -79,3 +79,9 @@ media/
 
 # logs
 logs.log
+
+# parser/josn
+parser/schedule_*
+
+
+

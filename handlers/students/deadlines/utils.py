@@ -1,5 +1,5 @@
 
 
-def get_delta_days(late_date, near_date):
-    return (near_date - late_date).days * -1
+def get_delta_days(old_date, near_date):
+    return (near_date - old_date).days * -1
 

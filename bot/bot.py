@@ -41,9 +41,8 @@ class Bot:
     async def run(self, dp: Dispatcher):
         for event in self._longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                logger.info(event.text)
+                logger.info(f"{event.user_id}:{event.text}")
                 await self.process_event(event, dp)
-        await asyncio.sleep(1)
 
     @staticmethod
     def stop_polling(loop):
@@ -52,10 +51,9 @@ class Bot:
 
     def start_polling(self, dp):
         logger.info("Start polling")
-        main_loop = asyncio.get_event_loop()
-        main_loop.create_task(self.run(dp))
+        main_loop = asyncio.new_event_loop()
         try:
-            main_loop.run_forever()
+            main_loop.run_until_complete(self.run(dp))
         except KeyboardInterrupt:
             logger.info("Stop polling")
             self.stop_polling(main_loop)

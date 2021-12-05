@@ -19,4 +19,7 @@ class HomeworksModel:
     def get_homeworks_by_filters(**filters):
         return Homeworks.objects.filter(**filters).order_by('date')
 
-
+    @staticmethod
+    @sync_to_async
+    def get_homeworks():
+        return Homeworks.objects.all()

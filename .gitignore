@@ -83,5 +83,8 @@ logs.log
 # parser/josn
 parser/schedule_*
 
+# state storage
+bot/storage/storage/*
+
 
 

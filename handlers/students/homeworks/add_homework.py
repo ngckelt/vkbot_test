@@ -6,8 +6,13 @@ from handlers.students.homeworks.utils import correct_date
 from database import StudentsModel, HomeworksModel
 from datetime import datetime
 from parser.get_group_subjects import get_group_subjects
-from keyboards.keyboards import main_keyboard, empty_keyboard, subject_keyboard, week_days_keyboard
+from keyboards.keyboards import main_keyboard, empty_keyboard, subject_keyboard, week_days_keyboard, home_keyboard
 from .utils import correct_date, correct_week_day, get_closest_week_day_date
+
+
+async def home(message, state):
+    await message.answer("Основное меню", keyboard=main_keyboard())
+    await state.finish()
 
 
 @dp.message_handler(text="Добавить домашку")
@@ -22,6 +27,8 @@ async def start_add_homework(message: Message, state: FSMContext):
 
 @dp.message_handler(state=AddHomework.get_homework_subject)
 async def get_subject(message: Message, state: FSMContext):
+    if message.text == "Домой":
+        return await home(message, state)
     subject_name = message.text
     s = None
     state_data = await state.get_data()
@@ -37,7 +44,7 @@ async def get_subject(message: Message, state: FSMContext):
                 break
     if s is not None:
         await state.update_data(subject=s)
-        await message.answer("Введи текст задания", keyboard=empty_keyboard())
+        await message.answer("Введи текст задания", keyboard=home_keyboard())
         await state.set_state(AddHomework.get_homework_text)
     else:
         await message.answer("Такого предмета не существует. Попробуй еще раз")
@@ -45,6 +52,8 @@ async def get_subject(message: Message, state: FSMContext):
 
 @dp.message_handler(state=AddHomework.get_homework_text)
 async def get_homework_text(message: Message, state: FSMContext):
+    if message.text == "Домой":
+        return await home(message, state)
     text = message.text
     await state.update_data(text=text)
     await state.set_state(AddHomework.get_homework_date)
@@ -68,6 +77,8 @@ async def add_homework(student_group, state: FSMContext):
 
 @dp.message_handler(state=AddHomework.get_homework_date, regexp="^[а-яА-Яё -]{2}$")
 async def get_homework_date_by_week_day(message: Message, state: FSMContext):
+    if message.text == "Домой":
+        return await home(message, state)
     week_day = message.text
     if correct_week_day(week_day):
         student = await StudentsModel.get_student_by_vk_id(message.user_id)
@@ -82,6 +93,8 @@ async def get_homework_date_by_week_day(message: Message, state: FSMContext):
 
 @dp.message_handler(state=AddHomework.get_homework_date)
 async def get_homework_date(message: Message, state: FSMContext):
+    if message.text == "Домой":
+        return await home(message, state)
     str_date = message.text
     if correct_date(str_date):
         student = await StudentsModel.get_student_by_vk_id(message.user_id)

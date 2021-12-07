@@ -38,6 +38,7 @@ def subject_keyboard(subjects):
         if len(subject) > 40:
             subject = subject[:37] + "..."
         markup.add_button(KeyboardButton(subject[:40]))
+    markup.add_button(KeyboardButton("Домой"))
     return markup
 
 
@@ -45,11 +46,17 @@ def week_days_keyboard():
     markup = ReplyKeyboardMarkup(row_width=3)
     for week_day in WEEK_DAYS:
         markup.add_button(KeyboardButton(week_day))
+    markup.add_button(KeyboardButton("Домой"))
     return markup
 
 
 def empty_keyboard():
     return EmptyKeyboard()
 
+
+def home_keyboard():
+    markup = ReplyKeyboardMarkup(row_width=2)
+    markup.add_button(KeyboardButton("Домой"))
+    return markup
 
 

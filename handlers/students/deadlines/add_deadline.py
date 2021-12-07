@@ -5,26 +5,35 @@ from states.students.deadlines import AddDeadline
 from handlers.students.homeworks.utils import correct_date
 from database import StudentsModel, DeadlinesModel
 from datetime import datetime
-from keyboards.keyboards import main_keyboard, empty_keyboard
+from keyboards.keyboards import main_keyboard, empty_keyboard, home_keyboard
+
+
+async def home(message, state):
+    await message.answer("Основное меню", keyboard=main_keyboard())
+    await state.finish()
 
 
 @dp.message_handler(text="Добавить дедлайн")
 async def add_deadline(message: Message, state: FSMContext):
     await state.start()
     await state.set_state(AddDeadline.get_text)
-    await message.answer("Введи текст", keyboard=empty_keyboard())
+    await message.answer("Введи текст", keyboard=home_keyboard())
 
 
 @dp.message_handler(state=AddDeadline.get_text)
 async def get_deadline_text(message: Message, state: FSMContext):
+    if message.text == "Домой":
+        return await home(message, state)
     text = message.text
     await state.update_data(text=text)
     await state.set_state(AddDeadline.get_date)
-    await message.answer("Введи дату в формате дд.мм.гггг")
+    await message.answer("Введи дату в формате дд.мм.гггг", keyboard=home_keyboard())
 
 
 @dp.message_handler(state=AddDeadline.get_date)
 async def get_deadline_date(message: Message, state: FSMContext):
+    if message.text == "Домой":
+        return await home(message, state)
     date = message.text
     if correct_date(date):
         student = await StudentsModel.get_student_by_vk_id(message.user_id)
@@ -39,4 +48,3 @@ async def get_deadline_date(message: Message, state: FSMContext):
         await message.answer("Дедлайн успешно добавлен", keyboard=main_keyboard())
     else:
         await message.answer("Неверная дата. Попробуй еще раз")
-

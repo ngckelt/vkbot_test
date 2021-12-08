@@ -38,7 +38,7 @@ def subject_keyboard(subjects):
         if len(subject) > 40:
             subject = subject[:37] + "..."
         markup.add_button(KeyboardButton(subject[:40]))
-    markup.add_button(KeyboardButton("Домой"))
+    # markup.add_button(KeyboardButton("Домой"))
     return markup
 
 
